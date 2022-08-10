@@ -1,22 +1,25 @@
 import { Button, Paper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "../../mobx/store";
 
 
 
 export default observer(function Lobby() {
-    const { signalRStore } = useStore()
+    const { signalRStore } = useStore();
     const [user, setUser] = useState("");
     const [room, setRoom] = useState("");
+
+
+
+
+
 
     function handleSubmit(e: any) {
         e.preventDefault()
         signalRStore.createHubConnection(user, room);
     }
-
-
 
     return (
         <Box component={Paper} maxWidth="sm" sx={{

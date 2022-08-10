@@ -13,7 +13,6 @@ function App() {
   const { signalRStore } = useStore()
 
   return (
-
     <Box sx={{ height: '100vh' }} >
       <h1 style={{ textAlign: 'center' }} >AllChat</h1>
       {!signalRStore.hubConnection ?
@@ -21,7 +20,6 @@ function App() {
         : <ChatPage />
       }
     </Box>
-
   );
 }
 

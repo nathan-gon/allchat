@@ -11,11 +11,13 @@ namespace API.SignalR
     {
         private readonly string _botUser;
         private readonly IDictionary<string, UserConnection> _connections;
+        private readonly List<string> UserList;
 
         public ChatHub(IDictionary<string, UserConnection> connections)
         {
             _botUser = "MyChat Bot";
             _connections = connections;
+            UserList = new List<string>();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
@@ -34,6 +36,8 @@ namespace API.SignalR
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, userConnection.Room);
 
+            UserList.Add(userConnection.User);
+
             _connections[Context.ConnectionId] = userConnection;
 
             await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", _botUser, $"{userConnection.User} has joined {userConnection.Room}");
@@ -48,6 +52,13 @@ namespace API.SignalR
                 await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", userConnection.User, message);
             }
         }
+
+        public async Task SendUserList()
+        {
+            await Clients.All.SendAsync("GetUserList", UserList);
+        }
+
+
 
         public Task SendUsersConnected(string room)
         {

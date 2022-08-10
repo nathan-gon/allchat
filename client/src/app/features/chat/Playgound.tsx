@@ -1,139 +1,60 @@
-import { Send } from "@mui/icons-material";
-import { makeStyles, Grid, Typography, Paper, List, ListItem, ListItemIcon, Avatar, ListItemText, Divider, TextField, Fab } from "@mui/material";
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-
-const useStyles = makeStyles((theme: any) => ({
-    table: {
-        minWidth: 650,
-    },
-    chatSection: {
-        width: '100%',
-        height: '80vh'
-    },
-    headBG: {
-        backgroundColor: '#e0e0e0'
-    },
-    borderRight500: {
-        borderRight: '1px solid #e0e0e0'
-    },
-    messageArea: {
-        height: '70vh',
-        overflowY: 'auto'
-    }
-}))
-
-
-// const useStyles = makeStyles({
-//     table: {
-//         minWidth: 650,
-//     },
-//     chatSection: {
-//         width: '100%',
-//         height: '80vh'
-//     },
-//     headBG: {
-//         backgroundColor: '#e0e0e0'
-//     },
-//     borderRight500: {
-//         borderRight: '1px solid #e0e0e0'
-//     },
-//     messageArea: {
-//         height: '70vh',
-//         overflowY: 'auto'
-//     }
-// });
-
-const Chat = () => {
-    return (
-        <div>
-            <Grid container>
-                <Grid item xs={12} >
-                    <Typography variant="h5" className="header-message">Chat</Typography>
-                </Grid>
-            </Grid>
-            <Grid container component={Paper} >
-                <Grid item xs={3} >
-                    <List>
-                        <ListItem button key="RemySharp">
-                            <ListItemIcon>
-                                <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="John Wick"></ListItemText>
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <Grid item xs={12} style={{ padding: '10px' }}>
-                        <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
-                    </Grid>
-                    <Divider />
-                    <List>
-                        <ListItem button key="RemySharp">
-                            <ListItemIcon>
-                                <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-                            <ListItemText secondary="online"   ></ListItemText>
-                        </ListItem>
-                        <ListItem button key="Alice">
-                            <ListItemIcon>
-                                <Avatar alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="Alice">Alice</ListItemText>
-                        </ListItem>
-                        <ListItem button key="CindyBaker">
-                            <ListItemIcon>
-                                <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-                        </ListItem>
-                    </List>
-                </Grid>
-                <Grid item xs={9}>
-                    <List >
-                        <ListItem key="1">
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <ListItemText primary="Hey man, What's up ?"></ListItemText>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <ListItemText secondary="09:30"></ListItemText>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
-                        <ListItem key="2">
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <ListItemText primary="Hey, Iam Good! What about you ?"></ListItemText>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <ListItemText secondary="09:31"></ListItemText>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
-                        <ListItem key="3">
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <ListItemText primary="Cool. i am good, let's catch up!"></ListItemText>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <ListItemText secondary="10:30"></ListItemText>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <Grid container style={{ padding: '20px' }}>
-                        <Grid item xs={11}>
-                            <TextField id="outlined-basic-email" label="Type Something" fullWidth />
-                        </Grid>
-                        <Grid xs={1} >
-                            <Fab color="primary" aria-label="add">  <Send /> </Fab>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </div>
-    );
+function createData(
+    name: string,
+    calories: number,
+    fat: number,
+    carbs: number,
+    protein: number,
+) {
+    return { name, calories, fat, carbs, protein };
 }
 
-export default Chat;
+const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
+export default function Playground() {
+    return (
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Dessert (100g serving)</TableCell>
+                        <TableCell align="right">Calories</TableCell>
+                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row) => (
+                        <TableRow
+                            key={row.name}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                                {row.name}
+                            </TableCell>
+                            <TableCell align="right">{row.calories}</TableCell>
+                            <TableCell align="right">{row.fat}</TableCell>
+                            <TableCell align="right">{row.carbs}</TableCell>
+                            <TableCell align="right">{row.protein}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
+}

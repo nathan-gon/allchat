@@ -1,6 +1,5 @@
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { makeAutoObservable, runInAction } from "mobx";
-import { env } from "process";
 import { Message } from "../model/message";
 
 
@@ -9,6 +8,7 @@ export default class SignalRStore {
     hubConnection: HubConnection | null = null;
     messages: Message[] = []
     users: string[] = []
+    userList: string[] = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -36,12 +36,14 @@ export default class SignalRStore {
         this.hubConnection.on("UsersInRoom", (users) => {
             runInAction(() => {
                 this.users = users;
+                console.log(this.users)
             })
         });
 
         this.hubConnection.invoke("JoinRoom", { user, room })
 
     }
+
 
 
     sendMessage = async (message: string) => {
@@ -53,7 +55,6 @@ export default class SignalRStore {
         }
     }
 
-
     closeConnection = async () => {
         try {
             if (this.hubConnection !== null)
@@ -62,8 +63,5 @@ export default class SignalRStore {
             console.log(e);
         }
     }
-
-
-
 
 }

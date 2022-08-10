@@ -22,12 +22,11 @@ builder.Services.AddCors(opt =>
                         .WithOrigins("http://localhost:3000");
                 });
             });
+
+
 builder.Services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>());
 
-
-
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
